@@ -2,6 +2,7 @@ package com.h87.sondji.service;
 
 import com.h87.sondji.domain.note.NoteRepository;
 import com.manageUser.model.CreateNoteDTO;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
