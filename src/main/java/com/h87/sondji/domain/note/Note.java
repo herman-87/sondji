@@ -2,8 +2,12 @@ package com.h87.sondji.domain.note;
 
 import com.h87.sondji.domain.commons.EntityBase;
 import com.h87.sondji.domain.tag.Tag;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;

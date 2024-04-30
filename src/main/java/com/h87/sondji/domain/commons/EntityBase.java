@@ -14,6 +14,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,7 +24,7 @@ public abstract class EntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "c_id")
-    private String id;
+    private UUID id;
 
     @Version
     @Column(name = "c_version")
