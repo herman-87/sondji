@@ -1,37 +1,24 @@
 package com.h87.sondji.api;
 
+import com.h87.sondji.common.ResourcesTest;
 import com.h87.sondji.service.NoteService;
 import com.manageUser.model.CreateNoteDTO;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
-@WebMvcTest
-@AutoConfigureWebTestClient
-class NoteResourcesTest {
-    @Autowired
-    private WebTestClient webTestClient;
+class NoteResourcesTest extends ResourcesTest {
     @MockBean
     private NoteService noteService;
     private NoteResources noteResources;
-
-    @BeforeEach
-    void setup() {
-        noteResources = new NoteResources(noteService);
-    }
 
     @Test
     @DisplayName(
@@ -61,5 +48,11 @@ class NoteResourcesTest {
                 .getResponseBody();
 
         Assertions.assertThat(resultUnderTest).isEqualTo(noteId);
+    }
+
+    @Override
+    protected Object getResources() {
+        noteResources = new NoteResources(noteService);
+        return noteResources;
     }
 }
