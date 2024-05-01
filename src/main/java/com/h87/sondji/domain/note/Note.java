@@ -3,12 +3,7 @@ package com.h87.sondji.domain.note;
 import com.h87.sondji.commons.EntityBase;
 import com.h87.sondji.domain.tag.Tag;
 import com.h87.sondji.utils.CreateNoteData;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,8 +21,15 @@ import java.util.List;
 public class Note extends EntityBase {
     @Embedded
     private NoteTitle title;
+
     @Embedded
     private NoteContent content;
+
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    @Column(name = "c_status")
+    private NoteStatus status = NoteStatus.DRAFT;
+
     @Builder.Default
     @ManyToMany
     @JoinTable(

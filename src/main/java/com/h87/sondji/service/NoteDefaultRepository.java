@@ -2,8 +2,11 @@ package com.h87.sondji.service;
 
 import com.h87.sondji.domain.note.Note;
 import com.h87.sondji.domain.note.NoteRepository;
+import com.h87.sondji.domain.note.NoteStatus;
 import com.h87.sondji.repository.NoteSpringRepository;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 public class NoteDefaultRepository implements NoteRepository {
@@ -12,5 +15,10 @@ public class NoteDefaultRepository implements NoteRepository {
     @Override
     public Note save(Note note) {
         return noteSpringRepository.save(note);
+    }
+
+    @Override
+    public List<Note> findAllByStatus(NoteStatus status) {
+        return noteSpringRepository.findAllByStatus(status);
     }
 }

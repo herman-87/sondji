@@ -2,14 +2,19 @@ package com.h87.sondji.api;
 
 import com.h87.sondji.service.NoteService;
 import com.manageUser.model.CreateNoteDTO;
-import org.assertj.core.api.Assertions;
+import com.manageUser.model.NoteDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 
+import java.util.List;
 import java.util.UUID;
+
+import static com.h87.sondji.commons.ExtractCode.extractCode1;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 class NoteResourcesTest extends ResourceTest {
     @MockBean
@@ -45,6 +50,38 @@ class NoteResourcesTest extends ResourceTest {
                 .getResponseBody();
 
         //Then
-        Assertions.assertThat(resultUnderTest).isEqualTo(noteId);
+        assertThat(resultUnderTest).isEqualTo(noteId);
+    }
+
+    @Test
+    @DisplayName(
+            """
+                    Given
+                    When I get all published note
+                    Then all published notes will then be returned.
+                    """
+    )
+    void getAllPublishedNotes_1_test() {
+        //Given
+        NoteDTO noteDTO1 = mock(NoteDTO.class);
+        NoteDTO noteDTO2 = mock(NoteDTO.class);
+        Mockito.when(noteService.getAllPublishedNotes(extractCode1)).thenReturn(List.of(noteDTO1, noteDTO2));
+
+        //When
+        List<NoteDTO> resultUnderTest = webTestClient
+                .get()
+                .uri(
+                        uriBuilder -> uriBuilder
+                                .path("/note")
+                                .queryParam("extractCode", extractCode1)
+                                .build()
+                )
+                .exchange()
+                .expectBodyList(NoteDTO.class)
+                .returnResult()
+                .getResponseBody();
+
+        //Then
+        assertThat(resultUnderTest).containsExactly(noteDTO1, noteDTO2);
     }
 }

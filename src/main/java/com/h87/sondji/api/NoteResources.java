@@ -6,7 +6,6 @@ import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,6 +26,8 @@ public class NoteResources implements NoteApi {
 
     @Override
     public ResponseEntity<List<NoteDTO>> getAllPublishedNotes(String extractCode) {
-        return null;
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(noteService.getAllPublishedNotes(extractCode));
     }
 }

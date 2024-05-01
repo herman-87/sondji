@@ -1,10 +1,20 @@
 package com.h87.sondji.service.mapper;
 
+import com.h87.sondji.commons.ExtractCode;
+import com.h87.sondji.domain.note.Note;
+import com.h87.sondji.domain.note.NoteContent;
+import com.h87.sondji.domain.note.NoteStatus;
+import com.h87.sondji.domain.note.NoteTitle;
 import com.h87.sondji.utils.CreateNoteData;
 import com.manageUser.model.CreateNoteDTO;
-import static org.assertj.core.api.Assertions.assertThat;
+import com.manageUser.model.NoteDTO;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 class NoteMapperTest {
     private NoteMapper objectUnderTest;
@@ -30,5 +40,41 @@ class NoteMapperTest {
         assertThat(resultUnderTest)
                 .returns(title, CreateNoteData::title)
                 .returns(content, CreateNoteData::content);
+    }
+
+    @Test
+    void toDTO_1_test() {
+        //Given
+        objectUnderTest = spy(objectUnderTest);
+        Note note = mock(Note.class);
+        NoteDTO noteDTO = mock(NoteDTO.class);
+
+        when(objectUnderTest.extractCode1(note)).thenReturn(noteDTO);
+
+        //When
+        NoteDTO resultUnderTest = objectUnderTest.toDTO(note, ExtractCode.extractCode1);
+
+        //Then
+        assertThat(resultUnderTest).isEqualTo(noteDTO);
+    }
+
+    @Test
+    void extractCode1_1_test() {
+        //Given
+        String titleValue = "any title";
+        String contentValue = "any content";
+        Note note = Note.builder()
+                .title(new NoteTitle(titleValue))
+                .content(new NoteContent(contentValue))
+                .status(NoteStatus.DRAFT)
+                .build();
+
+        //When
+        NoteDTO resultUnderTest = objectUnderTest.extractCode1(note);
+
+        //Then
+        assertThat(resultUnderTest)
+                .returns(titleValue, NoteDTO::getTitle)
+                .returns(contentValue, NoteDTO::getContent);
     }
 }
