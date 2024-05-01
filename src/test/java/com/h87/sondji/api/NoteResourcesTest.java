@@ -23,6 +23,7 @@ class NoteResourcesTest extends ResourceTest {
                     Then i should see that Service layer is calling to create a new Note with the CreateNoteDTO"""
     )
     void createNote() {
+        //Given
         CreateNoteDTO createNoteDTO = new CreateNoteDTO()
                 .title("any title")
                 .content("any content");
@@ -30,6 +31,7 @@ class NoteResourcesTest extends ResourceTest {
 
         Mockito.when(noteService.createNote(createNoteDTO)).thenReturn(noteId);
 
+        //When
         UUID resultUnderTest = webTestClient
                 .post()
                 .uri("/note")
@@ -42,6 +44,7 @@ class NoteResourcesTest extends ResourceTest {
                 .returnResult()
                 .getResponseBody();
 
+        //Then
         Assertions.assertThat(resultUnderTest).isEqualTo(noteId);
     }
 }

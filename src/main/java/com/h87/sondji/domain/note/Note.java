@@ -2,6 +2,7 @@ package com.h87.sondji.domain.note;
 
 import com.h87.sondji.domain.commons.EntityBase;
 import com.h87.sondji.domain.tag.Tag;
+import com.h87.sondji.utils.CreateNoteData;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -14,11 +15,13 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.LinkedList;
 import java.util.List;
 
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,4 +40,12 @@ public class Note extends EntityBase {
             inverseJoinColumns = @JoinColumn(name = "c_tag")
     )
     private List<Tag> tagList = new LinkedList<>();
+
+    public static Note createNote(CreateNoteData data, NoteRepository noteRepository) {
+        Note note = Note.builder()
+                .title(new NoteTitle(data.title()))
+                .content(new NoteContent(data.content()))
+                .build();
+        return noteRepository.save(note);
+    }
 }
