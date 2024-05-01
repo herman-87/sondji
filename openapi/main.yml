@@ -30,6 +30,28 @@ paths:
               schema:
                 type: string
                 format: UUID
+    get:
+      tags:
+        - Note
+      summary: Get all published notes
+      description: Get all notes posted in the app
+      operationId: getAllPublishedNotes
+      parameters:
+        - name: extractCode
+          in: query
+          description: the code which specifies the number of fields you wish to retrieve
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NoteDTO'
 
 components:
   schemas:
@@ -42,3 +64,10 @@ components:
         content:
           type: string
           description: content of the note
+    NoteDTO:
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: string

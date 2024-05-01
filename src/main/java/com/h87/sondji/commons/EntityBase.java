@@ -1,4 +1,4 @@
-package com.h87.sondji.domain.commons;
+package com.h87.sondji.commons;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

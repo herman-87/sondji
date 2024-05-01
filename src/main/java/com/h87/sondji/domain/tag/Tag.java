@@ -1,7 +1,7 @@
 package com.h87.sondji.domain.tag;
 
 
-import com.h87.sondji.domain.commons.EntityBase;
+import com.h87.sondji.commons.EntityBase;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

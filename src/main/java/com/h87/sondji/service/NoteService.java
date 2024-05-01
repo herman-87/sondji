@@ -1,6 +1,6 @@
 package com.h87.sondji.service;
 
-import com.h87.sondji.domain.commons.EntityBase;
+import com.h87.sondji.commons.EntityBase;
 import com.h87.sondji.domain.note.Note;
 import com.h87.sondji.domain.note.NoteRepository;
 import com.h87.sondji.service.mapper.NoteMapper;
