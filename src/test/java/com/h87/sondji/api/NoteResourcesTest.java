@@ -1,24 +1,19 @@
 package com.h87.sondji.api;
 
-import com.h87.sondji.common.ResourcesTest;
 import com.h87.sondji.service.NoteService;
 import com.manageUser.model.CreateNoteDTO;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 
 import java.util.UUID;
 
-@ExtendWith(MockitoExtension.class)
-class NoteResourcesTest extends ResourcesTest {
+class NoteResourcesTest extends ResourceTest {
     @MockBean
     private NoteService noteService;
-    private NoteResources noteResources;
 
     @Test
     @DisplayName(
@@ -48,11 +43,5 @@ class NoteResourcesTest extends ResourcesTest {
                 .getResponseBody();
 
         Assertions.assertThat(resultUnderTest).isEqualTo(noteId);
-    }
-
-    @Override
-    protected Object getResources() {
-        noteResources = new NoteResources(noteService);
-        return noteResources;
     }
 }

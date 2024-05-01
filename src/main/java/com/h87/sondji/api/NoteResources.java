@@ -18,6 +18,8 @@ public class NoteResources implements NoteApi {
 
     @Override
     public ResponseEntity<UUID> createNote(CreateNoteDTO createNoteDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(noteService.createNote(createNoteDTO));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(noteService.createNote(createNoteDTO));
     }
 }
