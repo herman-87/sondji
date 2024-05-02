@@ -6,15 +6,18 @@ import com.h87.sondji.service.NoteService;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
 import static com.manageUser.model.NoteStatusDTO.PUBLISHED;
+import com.manageUser.model.UpdateNoteDTO;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 class NoteResourcesTest extends ResourceTest {
@@ -89,7 +92,25 @@ class NoteResourcesTest extends ResourceTest {
 
     @Test
     void updateNoteByIdTest() {
-        //Given
+        UUID noteId = UUID.randomUUID();
+        UpdateNoteDTO updateNoteDTO = new UpdateNoteDTO()
+                .title("new title")
+                .content("new content");
 
+        //When
+        webTestClient
+                .put()
+                .uri(
+                        uriBuilder -> uriBuilder.path("/note/{noteId}")
+                                .build(Map.of("noteId", noteId))
+                )
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(updateNoteDTO)
+                .exchange()
+                .expectStatus()
+                .isNoContent();
+
+        //Then
+        verify(noteService).updateNoteById(noteId, updateNoteDTO);
     }
 }
