@@ -1,23 +1,21 @@
 package com.h87.sondji.api;
 
 import static com.h87.sondji.commons.ExtractCode.EXTRACT_CODE;
+import static com.h87.sondji.commons.ExtractCode.EXTRACT_CODE_1;
 import com.h87.sondji.service.NoteService;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
-import com.manageUser.model.NoteStatusDTO;
-import static com.manageUser.model.NoteStatusDTO.*;
+import static com.manageUser.model.NoteStatusDTO.PUBLISHED;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 
 import java.util.List;
 import java.util.UUID;
-
-import static com.h87.sondji.commons.ExtractCode.EXTRACT_CODE_1;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 class NoteResourcesTest extends ResourceTest {
     @MockBean
@@ -87,5 +85,11 @@ class NoteResourcesTest extends ResourceTest {
 
         //Then
         assertThat(resultUnderTest).containsExactly(noteDTO1, noteDTO2);
+    }
+
+    @Test
+    void updateNoteByIdTest() {
+        //Given
+
     }
 }

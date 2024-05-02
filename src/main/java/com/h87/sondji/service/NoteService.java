@@ -8,6 +8,7 @@ import com.h87.sondji.service.mapper.NoteMapper;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
 import com.manageUser.model.NoteStatusDTO;
+import com.manageUser.model.UpdateNoteDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,10 @@ public class NoteService {
                 .stream()
                 .map(note -> noteMapper.toDTO(note, extractCode1))
                 .toList();
+    }
+
+    @Transactional
+    public void updateNoteById(UUID noteId, UpdateNoteDTO updateNoteDTO) {
+
     }
 }

@@ -35,6 +35,7 @@ public class NoteResources implements NoteApi {
 
     @Override
     public ResponseEntity<Void> updateNoteById(UUID noteId, UpdateNoteDTO updateNoteDTO) {
-        return null;
+        noteService.updateNoteById(noteId, updateNoteDTO);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
