@@ -5,6 +5,7 @@ import com.manageUser.api.NoteApi;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
 import com.manageUser.model.NoteStatusDTO;
+import com.manageUser.model.UpdateNoteDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +31,10 @@ public class NoteResources implements NoteApi {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(noteService.getAllPublishedNotes(extractCode, status));
+    }
+
+    @Override
+    public ResponseEntity<Void> updateNoteById(UUID noteId, UpdateNoteDTO updateNoteDTO) {
+        return null;
     }
 }

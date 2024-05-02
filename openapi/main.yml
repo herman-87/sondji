@@ -58,10 +58,44 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/NoteDTO'
+  /note/{noteId}:
+    put:
+      tags:
+        - Note
+      summary: update a note
+      description: update a note
+      operationId: updateNoteById
+      parameters:
+        - name: noteId
+          in: path
+          description: ID of the note to update
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: new data of the note to modify
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateNoteDTO'
+      responses:
+        201:
+          description: successful operation
 
 components:
   schemas:
     CreateNoteDTO:
+      type: object
+      properties:
+        title:
+          type: string
+          description: title of the note
+        content:
+          type: string
+          description: content of the note
+    UpdateNoteDTO:
       type: object
       properties:
         title:
