@@ -8,14 +8,13 @@ import com.h87.sondji.service.mapper.NoteMapper;
 import com.h87.sondji.utils.CreateNoteData;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
-import org.assertj.core.api.Assertions;
+import com.manageUser.model.NoteStatusDTO;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
@@ -70,18 +69,19 @@ class NoteServiceTest {
     )
     void getAllPublishedNotes_1_test() {
         //Given
-        String extractCode = ExtractCode.extractCode1;
+        String extractCode = ExtractCode.EXTRACT_CODE_1;
         NoteDTO noteDTO1 = mock(NoteDTO.class);
         NoteDTO noteDTO2 = mock(NoteDTO.class);
         Note note1 = mock(Note.class);
         Note note2 = mock(Note.class);
 
+        when(noteMapper.fromNoteStatusDTO(NoteStatusDTO.PUBLISHED)).thenReturn(NoteStatus.PUBLISHED);
         when(noteRepository.findAllByStatus(NoteStatus.PUBLISHED)).thenReturn(List.of(note1, note2));
         when(noteMapper.toDTO(note1, extractCode)).thenReturn(noteDTO1);
         when(noteMapper.toDTO(note2, extractCode)).thenReturn(noteDTO2);
 
         //When
-        List<NoteDTO> resultUnderTest = objectUnderTest.getAllPublishedNotes(extractCode);
+        List<NoteDTO> resultUnderTest = objectUnderTest.getAllPublishedNotes(extractCode, NoteStatusDTO.PUBLISHED);
 
         //Then
         assertThat(resultUnderTest).containsExactly(noteDTO1, noteDTO2);

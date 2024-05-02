@@ -8,13 +8,13 @@ import com.h87.sondji.domain.note.NoteTitle;
 import com.h87.sondji.utils.CreateNoteData;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
-import org.assertj.core.api.Assertions;
+import com.manageUser.model.NoteStatusDTO;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 class NoteMapperTest {
     private NoteMapper objectUnderTest;
@@ -52,7 +52,7 @@ class NoteMapperTest {
         when(objectUnderTest.extractCode1(note)).thenReturn(noteDTO);
 
         //When
-        NoteDTO resultUnderTest = objectUnderTest.toDTO(note, ExtractCode.extractCode1);
+        NoteDTO resultUnderTest = objectUnderTest.toDTO(note, ExtractCode.EXTRACT_CODE_1);
 
         //Then
         assertThat(resultUnderTest).isEqualTo(noteDTO);
@@ -76,5 +76,14 @@ class NoteMapperTest {
         assertThat(resultUnderTest)
                 .returns(titleValue, NoteDTO::getTitle)
                 .returns(contentValue, NoteDTO::getContent);
+    }
+
+    @Test
+    void fromNoteStatusDTO_1_tes() {
+        //When
+        NoteStatus resultUnderTest = objectUnderTest.fromNoteStatusDTO(NoteStatusDTO.DELETED);
+
+        //Then
+        assertThat(resultUnderTest).isEqualTo(NoteStatus.DELETED);
     }
 }

@@ -1,8 +1,11 @@
 package com.h87.sondji.api;
 
+import static com.h87.sondji.commons.ExtractCode.EXTRACT_CODE;
 import com.h87.sondji.service.NoteService;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
+import com.manageUser.model.NoteStatusDTO;
+import static com.manageUser.model.NoteStatusDTO.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -12,7 +15,7 @@ import org.springframework.http.MediaType;
 import java.util.List;
 import java.util.UUID;
 
-import static com.h87.sondji.commons.ExtractCode.extractCode1;
+import static com.h87.sondji.commons.ExtractCode.EXTRACT_CODE_1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -65,7 +68,7 @@ class NoteResourcesTest extends ResourceTest {
         //Given
         NoteDTO noteDTO1 = mock(NoteDTO.class);
         NoteDTO noteDTO2 = mock(NoteDTO.class);
-        Mockito.when(noteService.getAllPublishedNotes(extractCode1)).thenReturn(List.of(noteDTO1, noteDTO2));
+        Mockito.when(noteService.getAllPublishedNotes(EXTRACT_CODE_1, PUBLISHED)).thenReturn(List.of(noteDTO1, noteDTO2));
 
         //When
         List<NoteDTO> resultUnderTest = webTestClient
@@ -73,7 +76,8 @@ class NoteResourcesTest extends ResourceTest {
                 .uri(
                         uriBuilder -> uriBuilder
                                 .path("/note")
-                                .queryParam("extractCode", extractCode1)
+                                .queryParam(EXTRACT_CODE, EXTRACT_CODE_1)
+                                .queryParam("noteStatus", PUBLISHED)
                                 .build()
                 )
                 .exchange()

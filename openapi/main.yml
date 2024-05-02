@@ -33,16 +33,22 @@ paths:
     get:
       tags:
         - Note
-      summary: Get all published notes
-      description: Get all notes posted in the app
-      operationId: getAllPublishedNotes
+      summary: Get all notes by status
+      description: Get all notes by status
+      operationId: getAllNotesByStatus
       parameters:
         - name: extractCode
           in: query
-          description: the code which specifies the number of fields you wish to retrieve
           required: true
+          description: the code which specifies the number of fields you wish to retrieve
           schema:
             type: string
+        - name: noteStatus
+          in: query
+          required: true
+          description: the status of the notes to be retrieved
+          schema:
+            $ref: '#/components/schemas/NoteStatusDTO'
       responses:
         200:
           description: successful operation
@@ -71,3 +77,9 @@ components:
           type: string
         content:
           type: string
+    NoteStatusDTO:
+      type: string
+      enum:
+        - DRAFT
+        - DELETED
+        - PUBLISHED

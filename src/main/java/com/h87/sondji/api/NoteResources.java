@@ -4,6 +4,7 @@ import com.h87.sondji.service.NoteService;
 import com.manageUser.api.NoteApi;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
+import com.manageUser.model.NoteStatusDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +26,9 @@ public class NoteResources implements NoteApi {
     }
 
     @Override
-    public ResponseEntity<List<NoteDTO>> getAllPublishedNotes(String extractCode) {
+    public ResponseEntity<List<NoteDTO>> getAllNotesByStatus(String extractCode, NoteStatusDTO status) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(noteService.getAllPublishedNotes(extractCode));
+                .body(noteService.getAllPublishedNotes(extractCode, status));
     }
 }

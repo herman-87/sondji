@@ -7,9 +7,9 @@ import com.h87.sondji.domain.note.NoteStatus;
 import com.h87.sondji.service.mapper.NoteMapper;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
+import com.manageUser.model.NoteStatusDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.reactivestreams.Publisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,8 +33,10 @@ public class NoteService {
                 .orElseThrow(() -> new RuntimeException("Error when trying to create a Note"));
     }
 
-    public List<NoteDTO> getAllPublishedNotes(String extractCode1) {
-        return noteRepository.findAllByStatus(NoteStatus.PUBLISHED)
+    @Transactional
+    public List<NoteDTO> getAllPublishedNotes(String extractCode1, NoteStatusDTO status) {
+        NoteStatus noteStatus = noteMapper.fromNoteStatusDTO(status);
+        return noteRepository.findAllByStatus(noteStatus)
                 .stream()
                 .map(note -> noteMapper.toDTO(note, extractCode1))
                 .toList();
