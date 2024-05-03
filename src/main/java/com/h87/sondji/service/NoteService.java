@@ -51,13 +51,19 @@ public class NoteService {
     @Transactional
     public void updateNoteById(UUID noteId, UpdateNoteDTO updateNoteDTO) {
         UpdateNoteData updateNoteData = noteMapper.fromUpdateNoteDTO(updateNoteDTO);
-        Note note = noteRepository.findById(noteId)
-                .orElseThrow(() -> new ResourcesNotFoundException(ErrorCode.NOTE_NOT_FOUND));
+        Note note = getNote(noteId);
         note.update(updateNoteData, noteRepository);
     }
 
+    private Note getNote(UUID noteId) throws ResourcesNotFoundException {
+        return noteRepository.findById(noteId)
+                .orElseThrow(() -> new ResourcesNotFoundException(ErrorCode.NOTE_NOT_FOUND));
+    }
+
+    @SneakyThrows
     @Transactional
     public NoteDTO getNoteById(UUID noteId, String extractCode) {
-        return null;
+        Note note = getNote(noteId);
+        return noteMapper.toDTO(note, extractCode);
     }
 }

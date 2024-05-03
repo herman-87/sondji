@@ -12,10 +12,6 @@ import com.h87.sondji.utils.UpdateNoteData;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
 import com.manageUser.model.NoteStatusDTO;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.*;
-
 import com.manageUser.model.UpdateNoteDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +23,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class NoteServiceTest {
@@ -138,6 +138,24 @@ class NoteServiceTest {
         assertThatThrownBy(() -> objectUnderTest.updateNoteById(noteId, updateNoteDTO))
                 .isInstanceOf(ResourcesNotFoundException.class)
                 .hasMessage(ErrorCode.NOTE_NOT_FOUND.getValue());
+    }
+
+    @Test
+    void getNoteById_1_test() {
+        //Given
+        UUID noteId = UUID.randomUUID();
+        NoteDTO noteDTO = mock(NoteDTO.class);
+        Note note = mock(Note.class);
+        String extractCode = ExtractCode.EXTRACT_CODE_1;
+
+        when(noteRepository.findById(noteId)).thenReturn(Optional.of(note));
+        when(noteMapper.toDTO(note, extractCode)).thenReturn(noteDTO);
+
+        //When
+        NoteDTO resultUnderTest = objectUnderTest.getNoteById(noteId, extractCode);
+
+        //Then
+        assertThat(resultUnderTest).isEqualTo(noteDTO);
     }
 
 }
