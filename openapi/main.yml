@@ -83,6 +83,27 @@ paths:
       responses:
         204:
           description: successful operation
+    get:
+      tags:
+        - Note
+      summary: get Note by ID
+      description: get Note by ID
+      operationId: getNoteById
+      parameters:
+        - name: noteId
+          in: path
+          description: identifier of the note to obtain
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteDTO'
 
 components:
   schemas:
