@@ -6,15 +6,16 @@ import com.h87.sondji.domain.note.NoteContent;
 import com.h87.sondji.domain.note.NoteStatus;
 import com.h87.sondji.domain.note.NoteTitle;
 import com.h87.sondji.utils.CreateNoteData;
+import com.h87.sondji.utils.UpdateNoteData;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
 import com.manageUser.model.NoteStatusDTO;
-import static org.assertj.core.api.Assertions.assertThat;
+import com.manageUser.model.UpdateNoteDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 class NoteMapperTest {
     private NoteMapper objectUnderTest;
@@ -85,5 +86,23 @@ class NoteMapperTest {
 
         //Then
         assertThat(resultUnderTest).isEqualTo(NoteStatus.DELETED);
+    }
+
+    @Test
+    void fromUpdateNoteDTO_1_test() {
+        //Given
+        String title = "any tile";
+        String content = "any content";
+        UpdateNoteDTO updateNoteDTO = new UpdateNoteDTO()
+                .title(title)
+                .content(content);
+
+        //When
+        UpdateNoteData resultUnderTest = objectUnderTest.fromUpdateNoteDTO(updateNoteDTO);
+
+        //Then
+        assertThat(resultUnderTest)
+                .returns(title, UpdateNoteData::title)
+                .returns(content, UpdateNoteData::content);
     }
 }

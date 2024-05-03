@@ -49,6 +49,8 @@ public class Note extends EntityBase {
     }
 
     public void update(UpdateNoteData updateNoteData, NoteRepository noteRepository) {
-
+        this.title = new NoteTitle(updateNoteData.title());
+        this.content = new NoteContent(updateNoteData.content());
+        noteRepository.save(this);
     }
 }
