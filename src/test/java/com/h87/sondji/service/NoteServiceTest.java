@@ -6,21 +6,23 @@ import com.h87.sondji.domain.note.NoteRepository;
 import com.h87.sondji.domain.note.NoteStatus;
 import com.h87.sondji.service.mapper.NoteMapper;
 import com.h87.sondji.utils.CreateNoteData;
+import com.h87.sondji.utils.UpdateNoteData;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
 import com.manageUser.model.NoteStatusDTO;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
+import com.manageUser.model.UpdateNoteDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
@@ -86,4 +88,30 @@ class NoteServiceTest {
         //Then
         assertThat(resultUnderTest).containsExactly(noteDTO1, noteDTO2);
     }
+
+    @Test
+    @DisplayName(
+            """
+                    Given Note to update exist by id
+                    When i update the Note with id
+                    Then i should see that the Note is updated with the passing data
+                    """
+    )
+    void updateNoteByIdTes() {
+        //Given
+        UUID noteId = UUID.randomUUID();
+        UpdateNoteDTO updateNoteDTO = mock(UpdateNoteDTO.class);
+        UpdateNoteData updateNoteData = UpdateNoteData.builder().build();
+        var note = mock(Note.class);
+
+        when(noteMapper.fromUpdateNoteDTO(updateNoteDTO)).thenReturn(updateNoteData);
+        when(noteRepository.findById(noteId)).thenReturn(Optional.of(note));
+
+        //When
+        objectUnderTest.updateNoteById(noteId, updateNoteDTO);
+
+        //Then
+        verify(note).update(updateNoteData, noteRepository);
+    }
+
 }

@@ -44,12 +44,12 @@ public abstract class EntityBase {
     private LocalDateTime lastModifiedDate;
 
     @PrePersist
-    public void prePersist() {
+    private void prePersist() {
         createdDate = LocalDateTime.now();
     }
 
     @PreUpdate
-    public void preUpdate() {
+    private void preUpdate() {
         lastModifiedDate = LocalDateTime.now();
     }
 }

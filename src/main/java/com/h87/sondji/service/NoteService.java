@@ -4,12 +4,16 @@ import com.h87.sondji.commons.EntityBase;
 import com.h87.sondji.domain.note.Note;
 import com.h87.sondji.domain.note.NoteRepository;
 import com.h87.sondji.domain.note.NoteStatus;
+import com.h87.sondji.service.excptions.ResourceNotFoundException;
 import com.h87.sondji.service.mapper.NoteMapper;
+import com.h87.sondji.utils.ErrorCode;
+import com.h87.sondji.utils.UpdateNoteData;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
 import com.manageUser.model.NoteStatusDTO;
 import com.manageUser.model.UpdateNoteDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,8 +47,12 @@ public class NoteService {
                 .toList();
     }
 
+    @SneakyThrows
     @Transactional
     public void updateNoteById(UUID noteId, UpdateNoteDTO updateNoteDTO) {
-
+        UpdateNoteData updateNoteData = noteMapper.fromUpdateNoteDTO(updateNoteDTO);
+        Note note = noteRepository.findById(noteId)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.NOTE_NOT_FOUND));
+        note.update(updateNoteData, noteRepository);
     }
 }

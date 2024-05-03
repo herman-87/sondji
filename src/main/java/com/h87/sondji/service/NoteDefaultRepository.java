@@ -7,6 +7,8 @@ import com.h87.sondji.repository.NoteSpringRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class NoteDefaultRepository implements NoteRepository {
@@ -20,5 +22,10 @@ public class NoteDefaultRepository implements NoteRepository {
     @Override
     public List<Note> findAllByStatus(NoteStatus status) {
         return noteSpringRepository.findAllByStatus(status);
+    }
+
+    @Override
+    public Optional<Note> findById(UUID noteId) {
+        return noteSpringRepository.findById(noteId);
     }
 }

@@ -6,9 +6,11 @@ import com.h87.sondji.domain.note.NoteContent;
 import com.h87.sondji.domain.note.NoteStatus;
 import com.h87.sondji.domain.note.NoteTitle;
 import com.h87.sondji.utils.CreateNoteData;
+import com.h87.sondji.utils.UpdateNoteData;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
 import com.manageUser.model.NoteStatusDTO;
+import com.manageUser.model.UpdateNoteDTO;
 import org.mapstruct.*;
 
 import java.util.Optional;
@@ -53,4 +55,9 @@ public interface NoteMapper {
 
     @BeanMapping(ignoreByDefault = true)
     NoteStatus fromNoteStatusDTO(NoteStatusDTO status);
+
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "title")
+    @Mapping(target = "content")
+    UpdateNoteData fromUpdateNoteDTO(UpdateNoteDTO updateNoteDTO);
 }

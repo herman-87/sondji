@@ -3,6 +3,7 @@ package com.h87.sondji.domain.note;
 import com.h87.sondji.commons.EntityBase;
 import com.h87.sondji.domain.tag.Tag;
 import com.h87.sondji.utils.CreateNoteData;
+import com.h87.sondji.utils.UpdateNoteData;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,5 +46,9 @@ public class Note extends EntityBase {
                 .content(new NoteContent(data.content()))
                 .build();
         return noteRepository.save(note);
+    }
+
+    public void update(UpdateNoteData updateNoteData, NoteRepository noteRepository) {
+
     }
 }
