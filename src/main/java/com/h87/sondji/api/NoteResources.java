@@ -27,6 +27,12 @@ public class NoteResources implements NoteApi {
     }
 
     @Override
+    public ResponseEntity<Void> deleteNoteByID(UUID noteId) {
+        noteService.deleteNoteById(noteId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @Override
     public ResponseEntity<List<NoteDTO>> getAllNotesByStatus(String extractCode, NoteStatusDTO status) {
         return ResponseEntity
                 .status(HttpStatus.OK)

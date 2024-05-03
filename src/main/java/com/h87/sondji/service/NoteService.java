@@ -66,4 +66,8 @@ public class NoteService {
         Note note = getNote(noteId);
         return noteMapper.toDTO(note, extractCode);
     }
+
+    public void deleteNoteById(UUID noteId) {
+
+    }
 }

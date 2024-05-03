@@ -1,17 +1,9 @@
 package com.h87.sondji.api;
 
-import static com.h87.sondji.commons.ExtractCode.EXTRACT_CODE;
-import static com.h87.sondji.commons.ExtractCode.EXTRACT_CODE_1;
-
-import com.h87.sondji.commons.ExtractCode;
 import com.h87.sondji.service.NoteService;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
-import static com.manageUser.model.NoteStatusDTO.PUBLISHED;
 import com.manageUser.model.UpdateNoteDTO;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -21,6 +13,12 @@ import org.springframework.http.MediaType;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import static com.h87.sondji.commons.ExtractCode.EXTRACT_CODE;
+import static com.h87.sondji.commons.ExtractCode.EXTRACT_CODE_1;
+import static com.manageUser.model.NoteStatusDTO.PUBLISHED;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 class NoteResourcesTest extends ResourceTest {
     @MockBean
@@ -141,5 +139,24 @@ class NoteResourcesTest extends ResourceTest {
 
         //Then
         assertThat(resultUnderTest).isEqualTo(noteDTO);
+    }
+
+    @Test
+    void deleteNoteByID_1_test() {
+        UUID noteId = UUID.randomUUID();
+
+        //When
+        webTestClient
+                .delete()
+                .uri(
+                        uriBuilder -> uriBuilder.path("/note/{noteId}")
+                                .build(Map.of("noteId", noteId))
+                )
+                .exchange()
+                .expectStatus()
+                .isNoContent();
+
+        //Then
+        verify(noteService).deleteNoteById(noteId);
     }
 }

@@ -110,6 +110,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NoteDTO'
+    delete:
+      tags:
+        - Note
+      summary: delete note by ID
+      description: delete note by ID
+      operationId: deleteNoteByID
+      parameters:
+        - name: noteId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        204:
+          description: successfully operation
+
 
 components:
   schemas:
