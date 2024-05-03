@@ -4,7 +4,7 @@ import com.h87.sondji.commons.EntityBase;
 import com.h87.sondji.domain.note.Note;
 import com.h87.sondji.domain.note.NoteRepository;
 import com.h87.sondji.domain.note.NoteStatus;
-import com.h87.sondji.service.excptions.ResourceNotFoundException;
+import com.h87.sondji.service.excptions.ResourcesNotFoundException;
 import com.h87.sondji.service.mapper.NoteMapper;
 import com.h87.sondji.utils.ErrorCode;
 import com.h87.sondji.utils.UpdateNoteData;
@@ -52,7 +52,12 @@ public class NoteService {
     public void updateNoteById(UUID noteId, UpdateNoteDTO updateNoteDTO) {
         UpdateNoteData updateNoteData = noteMapper.fromUpdateNoteDTO(updateNoteDTO);
         Note note = noteRepository.findById(noteId)
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.NOTE_NOT_FOUND));
+                .orElseThrow(() -> new ResourcesNotFoundException(ErrorCode.NOTE_NOT_FOUND));
         note.update(updateNoteData, noteRepository);
+    }
+
+    @Transactional
+    public NoteDTO getNoteById(UUID noteId, String extractCode) {
+        return null;
     }
 }

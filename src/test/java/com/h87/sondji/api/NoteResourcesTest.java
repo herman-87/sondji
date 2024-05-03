@@ -2,17 +2,19 @@ package com.h87.sondji.api;
 
 import static com.h87.sondji.commons.ExtractCode.EXTRACT_CODE;
 import static com.h87.sondji.commons.ExtractCode.EXTRACT_CODE_1;
+
+import com.h87.sondji.commons.ExtractCode;
 import com.h87.sondji.service.NoteService;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
 import static com.manageUser.model.NoteStatusDTO.PUBLISHED;
 import com.manageUser.model.UpdateNoteDTO;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 
@@ -112,5 +114,32 @@ class NoteResourcesTest extends ResourceTest {
 
         //Then
         verify(noteService).updateNoteById(noteId, updateNoteDTO);
+    }
+
+    @Test
+    void getNoteById_1_test() {
+        //Given
+        UUID noteId = UUID.randomUUID();
+        NoteDTO noteDTO = mock(NoteDTO.class);
+
+        when(noteService.getNoteById(noteId, EXTRACT_CODE_1)).thenReturn(noteDTO);
+
+        //When
+        NoteDTO resultUnderTest = webTestClient
+                .get()
+                .uri(
+                        uriBuilder -> uriBuilder
+                                .path("/note/{noteId}")
+                                .queryParam(EXTRACT_CODE, EXTRACT_CODE_1)
+                                .build(Map.of("noteId", noteId))
+                )
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(NoteDTO.class)
+                .returnResult()
+                .getResponseBody();
+
+        //Then
+        assertThat(resultUnderTest).isEqualTo(noteDTO);
     }
 }

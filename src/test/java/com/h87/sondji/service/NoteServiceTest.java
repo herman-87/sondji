@@ -4,13 +4,16 @@ import com.h87.sondji.commons.ExtractCode;
 import com.h87.sondji.domain.note.Note;
 import com.h87.sondji.domain.note.NoteRepository;
 import com.h87.sondji.domain.note.NoteStatus;
+import com.h87.sondji.service.excptions.ResourcesNotFoundException;
 import com.h87.sondji.service.mapper.NoteMapper;
 import com.h87.sondji.utils.CreateNoteData;
+import com.h87.sondji.utils.ErrorCode;
 import com.h87.sondji.utils.UpdateNoteData;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
 import com.manageUser.model.NoteStatusDTO;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 import com.manageUser.model.UpdateNoteDTO;
@@ -97,7 +100,7 @@ class NoteServiceTest {
                     Then i should see that the Note is updated with the passing data
                     """
     )
-    void updateNoteByIdTes() {
+    void updateNoteById_1_test1() {
         //Given
         UUID noteId = UUID.randomUUID();
         UpdateNoteDTO updateNoteDTO = mock(UpdateNoteDTO.class);
@@ -112,6 +115,29 @@ class NoteServiceTest {
 
         //Then
         verify(note).update(updateNoteData, noteRepository);
+    }
+
+    @Test
+    @DisplayName(
+            """
+                    Given Note to update does not exist
+                    When i try to update the Note by id
+                    Then a ResourcesNotFoundException was throw with error code 'Note Not Found'
+                    """
+    )
+    void updateNoteByIdTes() {
+        //Given
+        UUID noteId = UUID.randomUUID();
+        UpdateNoteDTO updateNoteDTO = mock(UpdateNoteDTO.class);
+        UpdateNoteData updateNoteData = UpdateNoteData.builder().build();
+
+        when(noteMapper.fromUpdateNoteDTO(updateNoteDTO)).thenReturn(updateNoteData);
+        when(noteRepository.findById(noteId)).thenReturn(Optional.empty());
+
+        //When
+        assertThatThrownBy(() -> objectUnderTest.updateNoteById(noteId, updateNoteDTO))
+                .isInstanceOf(ResourcesNotFoundException.class)
+                .hasMessage(ErrorCode.NOTE_NOT_FOUND.getValue());
     }
 
 }
