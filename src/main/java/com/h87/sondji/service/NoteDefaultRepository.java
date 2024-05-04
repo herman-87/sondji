@@ -28,4 +28,9 @@ public class NoteDefaultRepository implements NoteRepository {
     public Optional<Note> findById(UUID noteId) {
         return noteSpringRepository.findById(noteId);
     }
+
+    @Override
+    public void delete(Note note) {
+        noteSpringRepository.delete(note);
+    }
 }

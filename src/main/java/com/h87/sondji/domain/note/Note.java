@@ -53,4 +53,8 @@ public class Note extends EntityBase {
         this.content = new NoteContent(updateNoteData.content());
         noteRepository.save(this);
     }
+
+    public void delete(NoteRepository noteRepository) {
+        noteRepository.delete(this);
+    }
 }

@@ -4,6 +4,7 @@ import com.h87.sondji.commons.EntityBase;
 import com.h87.sondji.domain.note.Note;
 import com.h87.sondji.domain.note.NoteRepository;
 import com.h87.sondji.domain.note.NoteStatus;
+import com.h87.sondji.repository.NoteSpringRepository;
 import com.h87.sondji.service.excptions.ResourcesNotFoundException;
 import com.h87.sondji.service.mapper.NoteMapper;
 import com.h87.sondji.utils.ErrorCode;
@@ -26,6 +27,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class NoteService {
+    private final NoteSpringRepository noteSpringRepository;
     private final NoteRepository noteRepository;
     private final NoteMapper noteMapper;
 
@@ -67,7 +69,11 @@ public class NoteService {
         return noteMapper.toDTO(note, extractCode);
     }
 
-    public void deleteNoteById(UUID noteId) {
 
+    @SneakyThrows
+    @Transactional
+    public void deleteNoteById(UUID noteId) {
+        Note note = getNote(noteId);
+        note.delete(noteRepository);
     }
 }

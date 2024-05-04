@@ -10,4 +10,6 @@ public interface NoteRepository {
     List<Note> findAllByStatus(NoteStatus noteStatus);
 
     Optional<Note> findById(UUID noteId);
+
+    void delete(Note note);
 }

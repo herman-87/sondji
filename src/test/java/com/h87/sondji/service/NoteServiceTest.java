@@ -158,4 +158,15 @@ class NoteServiceTest {
         assertThat(resultUnderTest).isEqualTo(noteDTO);
     }
 
+    @Test
+    void deleteNoteByIdTest() throws ResourcesNotFoundException {
+        UUID noteId = UUID.randomUUID();
+
+        Note note = mock(Note.class);
+        when(noteRepository.findById(noteId)).thenReturn(Optional.of(note));
+
+        objectUnderTest.deleteNoteById(noteId);
+
+        verify(note).delete(noteRepository);
+    }
 }
