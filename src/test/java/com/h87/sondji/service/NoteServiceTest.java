@@ -4,10 +4,10 @@ import com.h87.sondji.commons.ExtractCode;
 import com.h87.sondji.domain.note.Note;
 import com.h87.sondji.domain.note.NoteRepository;
 import com.h87.sondji.domain.note.NoteStatus;
-import com.h87.sondji.service.excptions.ResourcesNotFoundException;
+import com.h87.sondji.service.exceptions.ResourcesNotFoundException;
 import com.h87.sondji.service.mapper.NoteMapper;
 import com.h87.sondji.utils.CreateNoteData;
-import com.h87.sondji.utils.ErrorCode;
+import com.h87.sondji.utils.SondjiErrorCode;
 import com.h87.sondji.utils.UpdateNoteData;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
@@ -137,7 +137,7 @@ class NoteServiceTest {
         //When
         assertThatThrownBy(() -> objectUnderTest.updateNoteById(noteId, updateNoteDTO))
                 .isInstanceOf(ResourcesNotFoundException.class)
-                .hasMessage(ErrorCode.NOTE_NOT_FOUND.getValue());
+                .hasMessage(SondjiErrorCode.NOTE_NOT_FOUND.getValue());
     }
 
     @Test

@@ -12,6 +12,7 @@ import com.manageUser.model.NoteDTO;
 import com.manageUser.model.NoteStatusDTO;
 import com.manageUser.model.UpdateNoteDTO;
 import org.mapstruct.*;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ import java.util.Optional;
         componentModel = "spring",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR
 )
+@Component
 public interface NoteMapper {
 
     @BeanMapping(ignoreByDefault = true)

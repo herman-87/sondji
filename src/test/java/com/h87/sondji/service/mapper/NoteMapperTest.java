@@ -11,11 +11,12 @@ import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
 import com.manageUser.model.NoteStatusDTO;
 import com.manageUser.model.UpdateNoteDTO;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 class NoteMapperTest {
     private NoteMapper objectUnderTest;

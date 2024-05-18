@@ -5,8 +5,9 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum ErrorCode {
-    NOTE_NOT_FOUND("Note Not Found");
+public enum SondjiErrorCode {
+    NOTE_NOT_FOUND("Note Not Found"),
+    SOMETHING_WRONG("Something wrong");
 
     private final String value;
 }

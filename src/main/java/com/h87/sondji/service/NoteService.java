@@ -4,10 +4,9 @@ import com.h87.sondji.commons.EntityBase;
 import com.h87.sondji.domain.note.Note;
 import com.h87.sondji.domain.note.NoteRepository;
 import com.h87.sondji.domain.note.NoteStatus;
-import com.h87.sondji.repository.NoteSpringRepository;
-import com.h87.sondji.service.excptions.ResourcesNotFoundException;
+import com.h87.sondji.service.exceptions.ResourcesNotFoundException;
 import com.h87.sondji.service.mapper.NoteMapper;
-import com.h87.sondji.utils.ErrorCode;
+import com.h87.sondji.utils.SondjiErrorCode;
 import com.h87.sondji.utils.UpdateNoteData;
 import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
@@ -27,7 +26,6 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class NoteService {
-    private final NoteSpringRepository noteSpringRepository;
     private final NoteRepository noteRepository;
     private final NoteMapper noteMapper;
 
@@ -59,7 +57,7 @@ public class NoteService {
 
     private Note getNote(UUID noteId) throws ResourcesNotFoundException {
         return noteRepository.findById(noteId)
-                .orElseThrow(() -> new ResourcesNotFoundException(ErrorCode.NOTE_NOT_FOUND));
+                .orElseThrow(() -> new ResourcesNotFoundException(SondjiErrorCode.NOTE_NOT_FOUND));
     }
 
     @SneakyThrows

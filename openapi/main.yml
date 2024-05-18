@@ -7,6 +7,7 @@ servers:
   - url: http://localhost:8080
 tags:
   - name: Note
+  - name: Tag
 paths:
   /note:
     post:
@@ -126,7 +127,56 @@ paths:
       responses:
         204:
           description: successfully operation
-
+  /tag:
+    post:
+      tags:
+        - Tag
+      summary: Create a new tag
+      description: Create a new tag
+      operationId: createTag
+      requestBody:
+        description: tag data required to create a new tag
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTagDTO'
+      responses:
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+                format: UUID
+  /tag/{tagId}:
+    get:
+      tags:
+        - Tag
+      summary: get Tag by ID
+      description: get Tag by ID
+      operationId: getTagById
+      parameters:
+        - name: tagId
+          in: path
+          description: identifier of the tag to obtain
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: extractCode
+          in: query
+          required: true
+          description: the code which specifies the number of fields you wish to retrieve
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagDTO'
 
 components:
   schemas:
@@ -139,6 +189,15 @@ components:
         content:
           type: string
           description: content of the note
+    CreateTagDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: name of the tag
+        description:
+          type: string
+          description: description of the tag
     UpdateNoteDTO:
       type: object
       properties:
@@ -161,3 +220,12 @@ components:
         - DRAFT
         - DELETED
         - PUBLISHED
+    TagDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: name of the tag
+        description:
+          type: string
+          description: description of the tag

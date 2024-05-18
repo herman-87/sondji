@@ -14,6 +14,20 @@ class NoteTest {
     private Note objectUnderTest;
 
     @Test
+    void NoteBuilderTest() {
+        String title = "any title";
+        String content = "any note content";
+        Note note = Note.builder()
+                .title(new NoteTitle(title))
+                .content(new NoteContent(content))
+                .build();
+
+        assertThat(note)
+                .returns(title, note1 -> note1.getTitle().getValue())
+                .returns(content, note2 -> note2.getContent().getValue());
+    }
+
+    @Test
     @DisplayName(
             """
                     Given
