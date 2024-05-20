@@ -2,7 +2,7 @@ package com.h87.sondji.service;
 
 import com.h87.sondji.domain.tag.Tag;
 import com.h87.sondji.domain.tag.TagRepository;
-import com.h87.sondji.service.exceptions.ResourcesNotFoundException;
+import com.h87.sondji.exceptions.ResourcesNotFoundException;
 import com.h87.sondji.service.mapper.TagMapper;
 import com.h87.sondji.utils.SondjiErrorCode;
 import com.manageUser.model.CreateTagDTO;

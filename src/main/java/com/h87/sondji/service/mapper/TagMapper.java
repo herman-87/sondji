@@ -32,7 +32,7 @@ public interface TagMapper {
         throw new RuntimeException("Extraction of code ".concat(extractCode).concat(" is not supported for notes."));
     }
 
-    @BeanMapping
+    @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "name", qualifiedByName = "fromTagNameToString")
     @Mapping(target = "description", qualifiedByName = "fromTagDescriptionToString")
     TagDTO extractCode1(Tag tag);

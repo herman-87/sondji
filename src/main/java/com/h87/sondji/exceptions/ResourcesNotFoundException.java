@@ -1,4 +1,4 @@
-package com.h87.sondji.service.exceptions;
+package com.h87.sondji.exceptions;
 
 import com.h87.sondji.utils.SondjiErrorCode;
 

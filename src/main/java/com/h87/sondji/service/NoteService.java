@@ -4,7 +4,7 @@ import com.h87.sondji.commons.EntityBase;
 import com.h87.sondji.domain.note.Note;
 import com.h87.sondji.domain.note.NoteRepository;
 import com.h87.sondji.domain.note.NoteStatus;
-import com.h87.sondji.service.exceptions.ResourcesNotFoundException;
+import com.h87.sondji.exceptions.ResourcesNotFoundException;
 import com.h87.sondji.service.mapper.NoteMapper;
 import com.h87.sondji.utils.SondjiErrorCode;
 import com.h87.sondji.utils.UpdateNoteData;
