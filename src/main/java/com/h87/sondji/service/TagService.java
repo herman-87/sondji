@@ -12,6 +12,7 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,5 +38,9 @@ public class TagService {
                 .flatMap(tagRepository::findById)
                 .map(tag1 -> tagMapper.toDTO(tag1, extractCode))
                 .orElseThrow(() -> new ResourcesNotFoundException(SondjiErrorCode.NOTE_NOT_FOUND));
+    }
+
+    public List<TagDTO> getAllTag(String extractCode) {
+        return null;
     }
 }

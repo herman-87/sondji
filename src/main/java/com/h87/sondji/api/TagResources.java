@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,6 +23,13 @@ public class TagResources implements TagApi {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(tagService.createTag(createTagDTO));
+    }
+
+    @Override
+    public ResponseEntity<List<TagDTO>> getAllTag(String extractCode) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(tagService.getAllTag(extractCode));
     }
 
     @Override

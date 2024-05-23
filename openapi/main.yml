@@ -149,6 +149,28 @@ paths:
               schema:
                 type: string
                 format: UUID
+    get:
+      tags:
+        - Tag
+      summary: Get all Tag
+      description: Get all Tag
+      operationId: getAllTag
+      parameters:
+        - name: extractCode
+          in: query
+          required: true
+          description: the code which specifies the number of fields you wish to retrieve
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TagDTO'
   /tag/{tagId}:
     get:
       tags:

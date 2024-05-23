@@ -80,4 +80,15 @@ class TagResourcesTest extends ResourceTest {
 
         assertThat(resultUnderTest).isEqualTo(tagDTO1);
     }
+
+    @Test
+    void getAllTagTest() {
+        webTestClient
+                .get()
+                .uri(
+                        uriBuilder -> uriBuilder
+                        .path()
+                        .build()
+                )
+    }
 }
