@@ -9,12 +9,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -83,12 +86,27 @@ class TagResourcesTest extends ResourceTest {
 
     @Test
     void getAllTagTest() {
-        webTestClient
+        String extractCode = EXTRACT_CODE_1;
+        TagDTO tagDTO1 = mock(TagDTO.class);
+        TagDTO tagDTO2 = mock(TagDTO.class);
+
+        when(tagService.getAllTag(extractCode)).thenReturn(List.of(tagDTO1, tagDTO2));
+
+        List<TagDTO> resultUnderTest = webTestClient
                 .get()
                 .uri(
                         uriBuilder -> uriBuilder
-                        .path()
-                        .build()
+                                .path("/tag")
+                                .queryParam(EXTRACT_CODE, extractCode)
+                                .build()
                 )
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBodyList(TagDTO.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(resultUnderTest).containsExactly(tagDTO1, tagDTO2);
     }
 }

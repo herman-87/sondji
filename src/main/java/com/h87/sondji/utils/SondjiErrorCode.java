@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum SondjiErrorCode {
     NOTE_NOT_FOUND("Note Not Found"),
+    TAG_NOT_FOUND("Tag Not Found"),
     SOMETHING_WRONG("Something wrong");
 
     private final String value;

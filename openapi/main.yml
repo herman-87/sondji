@@ -199,7 +199,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TagDTO'
-
+  /note/{noteId}/tag/{tagId}:
+    put:
+      tags:
+        - Note
+      summary: add a Tag to a Note
+      description: add a Tag to a Note
+      operationId: addTagToNoteById
+      parameters:
+        - name: noteId
+          in: path
+          required: true
+          description: identifier of the Note in which we will add the Tag
+          schema:
+            type: string
+            format: uuid
+        - name: tagId
+          in: path
+          required: true
+          description: identifier of the Tag
+          schema:
+            type: string
+            format: uuid
+      responses:
+        204:
+          description: successful operation
 components:
   schemas:
     CreateNoteDTO:

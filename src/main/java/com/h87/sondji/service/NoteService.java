@@ -1,9 +1,12 @@
 package com.h87.sondji.service;
 
+import com.h87.sondji.api.NoteResources;
 import com.h87.sondji.commons.EntityBase;
 import com.h87.sondji.domain.note.Note;
 import com.h87.sondji.domain.note.NoteRepository;
 import com.h87.sondji.domain.note.NoteStatus;
+import com.h87.sondji.domain.tag.Tag;
+import com.h87.sondji.domain.tag.TagRepository;
 import com.h87.sondji.exceptions.ResourcesNotFoundException;
 import com.h87.sondji.service.mapper.NoteMapper;
 import com.h87.sondji.utils.SondjiErrorCode;
@@ -28,6 +31,8 @@ import java.util.UUID;
 public class NoteService {
     private final NoteRepository noteRepository;
     private final NoteMapper noteMapper;
+    private final TagRepository tagRepository;
+    private final NoteResources noteResources;
 
     @Transactional
     public UUID createNote(CreateNoteDTO createNoteDTO) {
@@ -73,5 +78,23 @@ public class NoteService {
     public void deleteNoteById(UUID noteId) {
         Note note = getNote(noteId);
         note.delete(noteRepository);
+    }
+
+    @Transactional
+    @SneakyThrows
+    public void addTag(UUID noteId, UUID tagId) {
+        Note note = getNoteById(noteId);
+        Tag tag = getTagById(tagId);
+        note.addTag(tag, noteRepository);
+    }
+
+    private Tag getTagById(UUID tagId) throws ResourcesNotFoundException {
+        return tagRepository.findById(tagId)
+                .orElseThrow(() -> new ResourcesNotFoundException(SondjiErrorCode.TAG_NOT_FOUND));
+    }
+
+    private Note getNoteById(UUID noteId) throws ResourcesNotFoundException {
+        return noteRepository.findById(noteId)
+                .orElseThrow(() -> new ResourcesNotFoundException(SondjiErrorCode.NOTE_NOT_FOUND));
     }
 }

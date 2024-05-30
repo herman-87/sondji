@@ -57,4 +57,8 @@ public class Note extends EntityBase {
     public void delete(NoteRepository noteRepository) {
         noteRepository.delete(this);
     }
+
+    public void addTag(Tag tag, NoteRepository noteRepository) {
+
+    }
 }

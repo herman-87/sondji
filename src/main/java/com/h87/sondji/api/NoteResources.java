@@ -20,6 +20,12 @@ public class NoteResources implements NoteApi {
     private final NoteService noteService;
 
     @Override
+    public ResponseEntity<Void> addTagToNoteById(UUID noteId, UUID tagId) {
+        noteService.addTag(noteId, tagId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @Override
     public ResponseEntity<UUID> createNote(CreateNoteDTO createNoteDTO) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)

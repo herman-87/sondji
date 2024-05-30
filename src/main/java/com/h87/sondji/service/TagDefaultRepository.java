@@ -5,6 +5,7 @@ import com.h87.sondji.domain.tag.TagRepository;
 import com.h87.sondji.repository.TagSpringRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,5 +21,10 @@ public class TagDefaultRepository implements TagRepository {
     @Override
     public Optional<Tag> findById(UUID tagId) {
         return tagSpringRepository.findById(tagId);
+    }
+
+    @Override
+    public List<Tag> findAll() {
+        return tagSpringRepository.findAll();
     }
 }

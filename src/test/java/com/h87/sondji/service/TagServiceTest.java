@@ -7,8 +7,7 @@ import com.h87.sondji.service.mapper.TagMapper;
 import com.h87.sondji.utils.CreateTagData;
 import com.manageUser.model.CreateTagDTO;
 import com.manageUser.model.TagDTO;
-import org.assertj.core.api.Assertions;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,6 +17,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -65,4 +65,22 @@ class TagServiceTest {
         assertThat(resultUnderTest).isEqualTo(tagDTO);
     }
 
+    @Test
+    void getAllTagTest1() {
+        //Given
+        TagDTO tagDTO1 = mock(TagDTO.class);
+        TagDTO tagDTO2 = mock(TagDTO.class);
+        Tag tag1 = mock(Tag.class);
+        Tag tag2 = mock(Tag.class);
+
+        when(tagRepository.findAll()).thenReturn(List.of(tag1, tag2));
+        when(tagMapper.extractCode1(tag1)).thenReturn(tagDTO1);
+        when(tagMapper.extractCode1(tag2)).thenReturn(tagDTO2);
+
+        //When
+        List<TagDTO> resultUnderTest = objectUnderTest.getAllTag(ExtractCode.EXTRACT_CODE_1);
+
+        //Then
+        assertThat(resultUnderTest).containsExactly(tagDTO1, tagDTO2);
+    }
 }

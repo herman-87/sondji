@@ -4,6 +4,8 @@ import com.h87.sondji.commons.ExtractCode;
 import com.h87.sondji.domain.note.Note;
 import com.h87.sondji.domain.note.NoteRepository;
 import com.h87.sondji.domain.note.NoteStatus;
+import com.h87.sondji.domain.tag.Tag;
+import com.h87.sondji.domain.tag.TagRepository;
 import com.h87.sondji.exceptions.ResourcesNotFoundException;
 import com.h87.sondji.service.mapper.NoteMapper;
 import com.h87.sondji.utils.CreateNoteData;
@@ -13,20 +15,22 @@ import com.manageUser.model.CreateNoteDTO;
 import com.manageUser.model.NoteDTO;
 import com.manageUser.model.NoteStatusDTO;
 import com.manageUser.model.UpdateNoteDTO;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class NoteServiceTest {
@@ -36,6 +40,8 @@ class NoteServiceTest {
     private NoteRepository noteRepository;
     @Mock
     private NoteMapper noteMapper;
+    @Mock
+    private TagRepository tagRepository;
 
     @Test
     @DisplayName(
@@ -168,5 +174,53 @@ class NoteServiceTest {
         objectUnderTest.deleteNoteById(noteId);
 
         verify(note).delete(noteRepository);
+    }
+
+    @Test
+    void addTagTest1() {
+        //Given
+        UUID noteId = UUID.randomUUID();
+        UUID tagId = UUID.randomUUID();
+        Note note = mock(Note.class);
+        Tag tag = mock(Tag.class);
+
+        when(noteRepository.findById(noteId)).thenReturn(Optional.of(note));
+        when(tagRepository.findById(tagId)).thenReturn(Optional.of(tag));
+
+        //When
+        objectUnderTest.addTag(noteId, tagId);
+
+        //Then
+        verify(note).addTag(tag, noteRepository);
+    }
+
+    @Test
+    void addTagTest2() {
+        //Given
+        UUID noteId = UUID.randomUUID();
+        UUID tagId = UUID.randomUUID();
+        Note note = mock(Note.class);
+
+        when(noteRepository.findById(noteId)).thenReturn(Optional.of(note));
+        when(tagRepository.findById(tagId)).thenReturn(Optional.empty());
+
+        //When
+        assertThatThrownBy(() -> objectUnderTest.addTag(noteId, tagId))
+                .isInstanceOf(ResourcesNotFoundException.class)
+                .hasMessage(SondjiErrorCode.TAG_NOT_FOUND.getValue());
+    }
+
+    @Test
+    void addTagTest3() {
+        //Given
+        UUID noteId = UUID.randomUUID();
+        UUID tagId = UUID.randomUUID();
+
+        when(noteRepository.findById(noteId)).thenReturn(Optional.empty());
+
+        //When
+        assertThatThrownBy(() -> objectUnderTest.addTag(noteId, tagId))
+                .isInstanceOf(ResourcesNotFoundException.class)
+                .hasMessage(SondjiErrorCode.NOTE_NOT_FOUND.getValue());
     }
 }

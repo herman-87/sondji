@@ -166,4 +166,23 @@ class NoteResourcesTest extends ResourceTest {
         //Then
         verify(noteService).deleteNoteById(noteId);
     }
+
+    @Test
+    void addNoteTest1() {
+        UUID tagId = UUID.randomUUID();
+        UUID noteId = UUID.randomUUID();
+
+        webTestClient
+                .put()
+                .uri(
+                        uriBuilder -> uriBuilder
+                                .path("/note/{noteId}/tag/{tagId}")
+                                .build(Map.of("noteId", noteId, "tagId", tagId))
+                )
+                .exchange()
+                .expectStatus()
+                .isNoContent();
+
+        verify(noteService).addTag(noteId, tagId);
+    }
 }

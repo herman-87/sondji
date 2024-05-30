@@ -40,7 +40,16 @@ public class TagService {
                 .orElseThrow(() -> new ResourcesNotFoundException(SondjiErrorCode.NOTE_NOT_FOUND));
     }
 
+    @Transactional
     public List<TagDTO> getAllTag(String extractCode) {
-        return null;
+        return tagRepository.findAll()
+                .stream()
+                .map(tag -> tagMapper.toDTO(tag, extractCode))
+                .toList();
+    }
+
+    @Transactional
+    public void addNote(UUID tagId, UUID noteId) {
+
     }
 }

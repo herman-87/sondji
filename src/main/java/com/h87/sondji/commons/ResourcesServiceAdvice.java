@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ResourcesAdvice {
+public class ResourcesServiceAdvice {
 
     @ExceptionHandler({ResourcesNotFoundException.class})
     public ResponseEntity<String> handleNotFoundException(ResourcesNotFoundException exception) {
