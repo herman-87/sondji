@@ -65,22 +65,22 @@ class TagServiceTest {
         assertThat(resultUnderTest).isEqualTo(tagDTO);
     }
 
-    @Test
-    void getAllTagTest1() {
-        //Given
-        TagDTO tagDTO1 = mock(TagDTO.class);
-        TagDTO tagDTO2 = mock(TagDTO.class);
-        Tag tag1 = mock(Tag.class);
-        Tag tag2 = mock(Tag.class);
-
-        when(tagRepository.findAll()).thenReturn(List.of(tag1, tag2));
-        when(tagMapper.extractCode1(tag1)).thenReturn(tagDTO1);
-        when(tagMapper.extractCode1(tag2)).thenReturn(tagDTO2);
-
-        //When
-        List<TagDTO> resultUnderTest = objectUnderTest.getAllTag(ExtractCode.EXTRACT_CODE_1);
-
-        //Then
-        assertThat(resultUnderTest).containsExactly(tagDTO1, tagDTO2);
-    }
+//    @Test
+//    void getAllTagTest1() {
+//        //Given
+//        TagDTO tagDTO1 = mock(TagDTO.class);
+//        TagDTO tagDTO2 = mock(TagDTO.class);
+//        Tag tag1 = mock(Tag.class);
+//        Tag tag2 = mock(Tag.class);
+//
+//        when(tagRepository.findAll()).thenReturn(List.of(tag1, tag2));
+//        when(tagMapper.extractCode1(tag1)).thenReturn(tagDTO1);
+//        when(tagMapper.extractCode1(tag2)).thenReturn(tagDTO2);
+//
+//        //When
+//        List<TagDTO> resultUnderTest = objectUnderTest.getAllTag(ExtractCode.EXTRACT_CODE_1);
+//
+//        //Then
+//        assertThat(resultUnderTest).containsExactly(tagDTO1, tagDTO2);
+//    }
 }

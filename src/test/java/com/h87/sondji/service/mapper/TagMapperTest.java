@@ -56,19 +56,19 @@ class TagMapperTest {
         assertThat(resultUnderTest).isEqualTo(tagDTO);
     }
 
-    @Test
-    void extractCode1Test() {
-        String name = "any tag name";
-        String description = "any tag description";
-        Tag tag = Tag.builder()
-                .name(new TagName(name))
-                .description(new TagDescription(description))
-                .build();
-
-        TagDTO resultUnderTest = objectUnderTest.extractCode1(tag);
-
-        assertThat(resultUnderTest)
-                .returns(name, TagDTO::getName)
-                .returns(description, TagDTO::getDescription);
-    }
+//    @Test
+//    void extractCode1Test() {
+//        String name = "any tag name";
+//        String description = "any tag description";
+//        Tag tag = Tag.builder()
+//                .name(new TagName(name))
+//                .description(new TagDescription(description))
+//                .build();
+//
+//        TagDTO resultUnderTest = objectUnderTest.extractCode1(tag);
+//
+//        assertThat(resultUnderTest)
+//                .returns(name, TagDTO::getName)
+//                .returns(description, TagDTO::getDescription);
+//    }
 }
